@@ -31,6 +31,18 @@ class Image(models.Model):
     profile = models.ForeignKey(User, on_delete=models.CASCADE)
     likes = models.IntegerField(default=0)
 
+    def __str__(self):
+        return self.name
+
+    def save_image(self):
+        self.save()
+
+    def delete_image(self):
+        self.delete()
+
+    @classmethod
+    def update_caption(cls, id, text):
+        cls.objects.get(id=id).caption = text
 
 class Comment(models.Model):
     image = models.ForeignKey(Image, on_delete=models.CASCADE)
