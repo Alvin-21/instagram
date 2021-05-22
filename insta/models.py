@@ -28,9 +28,9 @@ class Comment(models.Model):
 
 class Likes(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
-	image = models.ForeignKey(Image, on_delete=models.CASCADE)
+	image = models.ForeignKey(Image, on_delete=models.CASCADE, related_name='post_like')
 
 
 class Follow(models.Model):
-	follower = models.ForeignKey(User,on_delete=models.CASCADE, null=True)
-	following = models.ForeignKey(User,on_delete=models.CASCADE, null=True)
+	follower = models.ForeignKey(User,on_delete=models.CASCADE, null=True, related_name='follower')
+	following = models.ForeignKey(User,on_delete=models.CASCADE, null=True, related_name='following')
