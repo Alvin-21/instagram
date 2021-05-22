@@ -10,6 +10,19 @@ class Profile(models.Model):
     bio = models.TextField(max_length=150, null=True)
     image = CloudinaryField('image', null=True)
 
+    def __str__(self):
+        return self.first_name
+
+    def save_profifle(self):
+        self.save()
+
+    def delete_profile(self):
+        self.delete()
+
+    @classmethod
+    def update_bio(cls, id, text):
+        cls.objects.get(id=id).bio = text
+
 class Image(models.Model):
     image = CloudinaryField('image', null=True)
     name = models.CharField(max_length=30)
