@@ -43,7 +43,7 @@ class Image(models.Model):
 
     @classmethod
     def update_caption(cls, id, text):
-        cls.objects.get(id=id).caption = text
+         cls.objects.filter(id=id).update(caption=text)
 
 class Comment(models.Model):
     image = models.ForeignKey(Image, on_delete=models.CASCADE)
