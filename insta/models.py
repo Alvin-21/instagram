@@ -68,9 +68,9 @@ class Stream(models.Model):
     image = models.ForeignKey(Image, on_delete=models.CASCADE, null=True)
     date = models.DateTimeField()
 
-    def add_image(self, sender, instance, **kwargs):
-    	image = self.instance
-    	user = image.user
+    def add_image(sender, instance, *args, **kwargs):
+    	image = instance
+    	user = image.profile
     	followers = Follow.objects.all().filter(following=user)
     	for follower in followers:
     		stream = Stream(image=image, user=follower.follower, date=image.posted, following=user)
