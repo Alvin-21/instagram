@@ -22,7 +22,7 @@ class Profile(models.Model):
 
     @classmethod
     def update_bio(cls, id, text):
-        cls.objects.get(id=id).bio = text
+        cls.objects.filter(id=id).update(bio=text)
 
 class Image(models.Model):
     image = CloudinaryField('image', null=True)

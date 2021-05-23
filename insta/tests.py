@@ -24,3 +24,9 @@ class ProfileTest(TestCase):
         self.john.delete_profile()
         profile = Profile.objects.all()
         self.assertTrue(len(profile) == 0)
+
+    def test_update_bio(self):
+        self.john.save_profifle()
+        self.john.update_bio(self.john.id, 'This is my new bio')
+        profile = Profile.objects.filter(bio='This is my new bio')
+        self.assertTrue(len(profile) == 1)
