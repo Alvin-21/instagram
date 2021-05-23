@@ -30,3 +30,15 @@ class ProfileTest(TestCase):
         self.john.update_bio(self.john.id, 'This is my new bio')
         profile = Profile.objects.filter(bio='This is my new bio')
         self.assertTrue(len(profile) == 1)
+
+
+class ImageTest(TestCase):
+    def tearDown(self):
+        Profile.objects.all().delete()
+        Image.objects.all().delete()
+
+    def setUp(self):
+        self.pic = Image(name='mustang', caption='cool car', likes=0)
+
+    def test_instance(self):
+        self.assertTrue(isinstance(self.pic, Image))
