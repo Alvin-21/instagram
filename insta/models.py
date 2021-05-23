@@ -1,6 +1,7 @@
 from django.db import models
 from cloudinary.models import CloudinaryField
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
 
 # Create your models here.
 
@@ -57,5 +58,22 @@ class Likes(models.Model):
 
 
 class Follow(models.Model):
-	follower = models.ForeignKey(User,on_delete=models.CASCADE, null=True, related_name='follower')
-	following = models.ForeignKey(User,on_delete=models.CASCADE, null=True, related_name='following')
+    follower = models.ForeignKey(User,on_delete=models.CASCADE, null=True, related_name='follower')
+    following = models.ForeignKey(User,on_delete=models.CASCADE, null=True, related_name='following')
+
+
+class Stream(models.Model):
+    following = models.ForeignKey(User, on_delete=models.CASCADE,null=True, related_name='stream_following')
+    user = models.ForeignKey(User, on_delete=models.CASCADE)   
+    image = models.ForeignKey(Image, on_delete=models.CASCADE, null=True)
+    date = models.DateTimeField()
+
+    def add_image(self, sender, instance, **kwargs):
+    	image = self.instance
+    	user = image.user
+    	followers = Follow.objects.all().filter(following=user)
+    	for follower in followers:
+    		stream = Stream(image=image, user=follower.follower, date=image.posted, following=user)
+    		stream.save()
+
+post_save.connect(Stream.add_image, sender=Image)
