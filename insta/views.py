@@ -5,4 +5,14 @@ from .models import Profile, Image, Follow, Stream, Comment, Likes
 # Create your views here.
 
 def index(request):
-    return render(request, 'index.html')
+    user = request.user
+    images = Stream.objects.filter(user=user)
+
+    group_ids = []
+
+    for image in images:
+        group_ids.append(image.image_id)
+        
+    image_items = Image.objects.filter(id__in=group_ids).all().order_by('-posted')
+
+    return render(request, 'index.html', {"image_items": image_items})
