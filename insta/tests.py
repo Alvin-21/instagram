@@ -1,5 +1,6 @@
 from django.test import TestCase
 from .models import Profile, Image
+from django.contrib.auth.models import User
 
 # Create your tests here.
 
@@ -38,7 +39,13 @@ class ImageTest(TestCase):
         Image.objects.all().delete()
 
     def setUp(self):
-        self.pic = Image(name='mustang', caption='cool car', likes=0)
+        self.user = User.objects.create_user('john', email=None, password='secretpassword')
+        self.pic = Image(name='mustang', caption='cool car', profile=self.user, likes=0)
 
     def test_instance(self):
         self.assertTrue(isinstance(self.pic, Image))
+
+    def test_save_method(self):
+        self.pic.save_image()
+        pic = Image.objects.all()
+        self.assertTrue(len(pic) > 0)
