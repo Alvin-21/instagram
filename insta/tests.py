@@ -55,3 +55,9 @@ class ImageTest(TestCase):
         self.pic.delete_image()
         pic = Image.objects.all()
         self.assertTrue(len(pic) == 0)
+
+    def test_update_bio(self):
+        self.pic.save_image()
+        self.pic.update_caption(self.pic.id, 'This is my new caption')
+        pic = Image.objects.filter(caption='This is my new caption')
+        self.assertTrue(len(pic) == 1)
