@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'insta',
     'cloudinary',
+    'bootstrap4',
 ]
 
 MIDDLEWARE = [
