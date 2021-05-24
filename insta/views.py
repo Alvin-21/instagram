@@ -28,12 +28,13 @@ def new_image(request):
     if request.method == "POST":
         form = NewImageForm(request.POST, request.FILES)
         if form.is_valid():
-            image = form.cleaned_data.get('image')
-            caption = form.cleaned_data.get('caption')
+            image = form.cleaned_data['image']
+            caption = form.cleaned_data['caption']
+            name = form.cleaned_data['name']
         
-        i, created = Image.objects.get_or_create(image=image, caption= caption, user_id=user)
-        i.save()
-        return redirect('index')
+        photo = Image(image=image, caption= caption, profile_id=user, name=name)
+        photo.save()
+        return redirect(index)
 
     else:
         form = NewImageForm()
