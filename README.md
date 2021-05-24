@@ -1,6 +1,6 @@
 
 
-# YSL Gallery
+# Instagram Clone
 
 <table>
 <tr>
