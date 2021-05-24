@@ -12,8 +12,7 @@
 
 ## Demo
 
-Here is a working live demo : 
-
+Here is a working live demo : https://alvo-instagram.herokuapp.com/
 ### Landing Page
 
 Currently it is working properly, and displaying the images.
